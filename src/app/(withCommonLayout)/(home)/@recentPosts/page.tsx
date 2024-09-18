@@ -16,7 +16,7 @@ const RecentPost = async () => {
           A lst of items that have been recently found and reported.
         </p>
       </div>
-      <div className="my-8 grid justify-center gap-10 sm:grid-cols-1 md:grid-cols-4">
+      <div className="my-8 grid justify-center gap-10 sm:grid-cols-1 lg:grid-cols-4 md:grid-cols-3">
         {posts.map((post: IPost) => (
           <Card key={post._id} post={post} />
         ))}

@@ -2,7 +2,7 @@
 const loading = () => {
     return (
         <div>
-            <h1 className="">Loading...</h1>
+            <h1 className="">Global Loading...</h1>
         </div>
     );
 };
