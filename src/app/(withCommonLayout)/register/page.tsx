@@ -5,18 +5,36 @@ import registerValidationSchema from "@/src/schemas/register.schemas";
 import { registerUser } from "@/src/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const Register = () => {
+  // TanstackQuery
+  const {
+    mutate: handleUserRegistration,
+    isPending,
+    data,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationKey: ["USER_REGISTRATION"],
+    mutationFn: async (userData) => await registerUser(userData),
+    onSuccess: () => {
+      console.log("User Created Successfully");
+    },
+  });
+
+  console.log({ isPending, isSuccess, data });
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const userData = {
       ...data,
       profilePhoto:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     };
-    console.log("inside data", userData);
-    registerUser(userData);
+    // console.log("inside data", userData);
+    // registerUser(userData);
+    handleUserRegistration(userData);
   };
   return (
     <div className="flex h-[calc(100vh-100px)] flex-col items-center justify-center">
