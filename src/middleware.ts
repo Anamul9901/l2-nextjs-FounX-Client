@@ -14,13 +14,13 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   console.log("pathname", pathname);
 
-  const user = {
-    name: "Anamul",
-    token: "asdfsdaf",
-    role: "USER",
-  };
+  // const user = {
+  //   name: "Anamul",
+  //   token: "asdfsdaf",
+  //   role: "USER",
+  // };
 
-  //   const user = undefined;
+    const user = undefined;
 
   //   if (user?.role) {
   //     return NextResponse.next();
