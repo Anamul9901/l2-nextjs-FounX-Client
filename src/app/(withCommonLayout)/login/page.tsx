@@ -5,9 +5,10 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import loginValidationSchema from "@/src/schemas/loggin.schemas";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const Login = () => {
-  const onSubmit = (data: any) => {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
   };
   return (
