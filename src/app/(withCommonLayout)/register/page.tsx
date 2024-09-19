@@ -1,31 +1,17 @@
 "use client";
 import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
+import { useUserRegistration } from "@/src/hooks/auth.hook";
 import registerValidationSchema from "@/src/schemas/register.schemas";
-import { registerUser } from "@/src/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
-import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const Register = () => {
   // TanstackQuery
-  const {
-    mutate: handleUserRegistration,
-    isPending,
-    data,
-    isError,
-    isSuccess,
-  } = useMutation({
-    mutationKey: ["USER_REGISTRATION"],
-    mutationFn: async (userData) => await registerUser(userData),
-    onSuccess: () => {
-      console.log("User Created Successfully");
-    },
-  });
+  const {mutate: handleUserRegistration, isPending} =useUserRegistration()
 
-  console.log({ isPending, isSuccess, data });
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const userData = {
       ...data,
@@ -36,6 +22,10 @@ const Register = () => {
     // registerUser(userData);
     handleUserRegistration(userData);
   };
+
+  if(isPending){
+    // handle loading state
+  }
   return (
     <div className="flex h-[calc(100vh-100px)] flex-col items-center justify-center">
       <h3 className="my-2 text-xl font-bold">Register with FoundX</h3>
