@@ -21,7 +21,12 @@ const CratePost = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    // console.log(data);
+    const postData = {
+      ...data,
+      questions: data.questions.map((que: { value: string }) => que.value),
+    };
+    console.log(postData);
   };
 
   const handledFieldAppend = () => {
@@ -41,8 +46,9 @@ const CratePost = () => {
           </div>
 
           {fields.map((field, index) => (
-            <div key={field.id}>
+            <div key={field.id} className="flex items-center">
               <FXInput name={`questions.${index}.value`} label="Questions" />
+              <Button onClick={() => remove(index)}>Remove</Button>
             </div>
           ))}
 
