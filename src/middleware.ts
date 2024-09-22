@@ -15,16 +15,15 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   console.log("pathname", pathname);
 
-  const userToken = await getCurrentUser();
-  console.log(userToken);
-
   // const user = {
   //   name: "Anamul",
   //   token: "asdfsdaf",
   //   role: "USER",
   // };
 
-    const user = undefined;
+  const user = await getCurrentUser();
+  console.log(user);
+  // const user = undefined;
 
   //   if (user?.role) {
   //     return NextResponse.next();
@@ -37,7 +36,9 @@ export async function middleware(request: NextRequest) {
     if (AuthRoutes.includes(pathname)) {
       return NextResponse.next(); // if user null then AuthRoutes['/login', '/register'] equal pathname then redirect this
     } else {
-      return NextResponse.redirect(new URL("/login", request.url));
+      return NextResponse.redirect(
+        new URL(`/login?redirect=${pathname}`, request.url)
+      );
     }
   }
 
@@ -55,5 +56,6 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/profile", "/admin", "/login", "/register"],
+  //"/profile/:page*" means profile er pore joto page ase all page
+  matcher: ["/profile/:page*", "/admin/:page*", "/login", "/register"],
 };

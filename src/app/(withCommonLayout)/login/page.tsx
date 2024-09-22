@@ -8,12 +8,31 @@ import loginValidationSchema from "@/src/schemas/loggin.schemas";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useUserLogin } from "@/src/hooks/auth.hook";
 import Loading from "@/src/components/UI/loading";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 const Login = () => {
-  const { mutate: handleUserLogin, isPending } = useUserLogin();
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const rediract = searchParams.get("redirect");
+  // console.log(rediract);
+
+  const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     handleUserLogin(data);
   };
+
+  useEffect(() => {
+    if (!isPending && isSuccess) {
+      if (rediract) {
+        router.push(rediract);
+      } else {
+        router.push("/");
+      }
+    }
+  }, [isPending, isSuccess]);
 
   return (
     <>
@@ -27,10 +46,15 @@ const Login = () => {
             resolver={zodResolver(loginValidationSchema)}
           >
             <div className="py-3">
-              <FXInput name="email" label="Email" type="email"  size="sm" />
+              <FXInput name="email" label="Email" type="email" size="sm" />
             </div>
             <div className="py-3">
-              <FXInput name="password" label="Password" type="password" size="sm" />
+              <FXInput
+                name="password"
+                label="Password"
+                type="password"
+                size="sm"
+              />
             </div>
 
             <Button
