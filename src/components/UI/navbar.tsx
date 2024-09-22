@@ -1,3 +1,4 @@
+"use client"
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -16,8 +17,10 @@ import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/UI/theme-switch";
 import { Logo } from "@/src/components/icons";
 import NavberDropdown from "./navberDropdown";
+import { useUser } from "@/src/context/user.provider";
 
 export const Navbar = () => {
+  const { user } = useUser();
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -51,10 +54,16 @@ export const Navbar = () => {
       >
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
+
+          {/*  ai function er jonno "use client" use kora lagtese. "use client" use na korte chile ai function onno page e neye jabo */}
         </NavbarItem>
-        <NavbarItem>
-          <NavberDropdown />
-        </NavbarItem>
+        {user?.email ? (
+          <NavbarItem>
+            <NavberDropdown />
+          </NavbarItem>
+        ) : (
+          <Link href="/login">Login</Link>
+        )}
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
