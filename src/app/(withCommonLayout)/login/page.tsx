@@ -10,6 +10,7 @@ import { useUserLogin } from "@/src/hooks/auth.hook";
 import Loading from "@/src/components/UI/loading";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { useUser } from "@/src/context/user.provider";
 
 const Login = () => {
   const router = useRouter();
@@ -17,11 +18,13 @@ const Login = () => {
   const searchParams = useSearchParams();
   const rediract = searchParams.get("redirect");
   // console.log(rediract);
+  const { setIsLoading: userLoading } = useUser();
 
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     handleUserLogin(data);
+    userLoading(true);
   };
 
   useEffect(() => {

@@ -20,7 +20,8 @@ import NavberDropdown from "./navberDropdown";
 import { useUser } from "@/src/context/user.provider";
 
 export const Navbar = () => {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
+  console.log('logading',user, isLoading);
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
