@@ -11,7 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 
 const NavberDropdown = () => {
-  const { setIsLoading: userLoading } = useUser();
+  const { user, setIsLoading: userLoading } = useUser();
   const router = useRouter();
 
   const handleLogOut = () => {
@@ -25,7 +25,7 @@ const NavberDropdown = () => {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Avatar className="cursor-pointer" name="Anam" />
+        <Avatar className="cursor-pointer" src={user?.profilePhoto} />
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem onClick={() => handleNavigation("/profile")}>
