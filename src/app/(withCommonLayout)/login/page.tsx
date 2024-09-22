@@ -6,11 +6,14 @@ import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import loginValidationSchema from "@/src/schemas/loggin.schemas";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useUserLogin } from "@/src/hooks/auth.hook";
 
 const Login = () => {
+  const { mutate: handleUserLogin, isPending } = useUserLogin();
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    handleUserLogin(data);
   };
+
   return (
     <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
       <h3 className="my-2 text-2xl font-bold">Login with FoundX</h3>
