@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -18,6 +18,7 @@ import { ThemeSwitch } from "@/src/components/UI/theme-switch";
 import { Logo } from "@/src/components/icons";
 import NavberDropdown from "./navberDropdown";
 import { useUser } from "@/src/context/user.provider";
+import { Button } from "@nextui-org/button";
 
 export const Navbar = () => {
   const { user } = useUser();
@@ -62,7 +63,9 @@ export const Navbar = () => {
             <NavberDropdown />
           </NavbarItem>
         ) : (
-          <Link href="/login">Login</Link>
+          <Link href="/login">
+            <Button>Login</Button>
+          </Link>
         )}
       </NavbarContent>
 
