@@ -19,12 +19,12 @@ const NavberDropdown = () => {
   const handleLogOut = () => {
     logout();
     userLoading(true);
-  };
 
-  //* logout er pore derect home page e na neye aivabe home page e nuar karon holo, non-protracted route theke logout korle o home page e neye jabe. tai aivabe korse.
-  if (protectedRoutes.some((route) => pathname.match(route))) {
-    router.push("/");
-  }
+    //* logout er pore derect home page e na neye aivabe home page e nuar karon holo, non-protracted route theke logout korle o home page e neye jabe. tai aivabe korse.
+    if (protectedRoutes.some((route) => pathname.match(route))) {
+      router.push("/");
+    }
+  };
 
   const handleNavigation = (pathname: string) => {
     router.push(pathname);

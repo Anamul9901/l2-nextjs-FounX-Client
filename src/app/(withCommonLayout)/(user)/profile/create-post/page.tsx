@@ -26,7 +26,7 @@ const CratePost = () => {
       ...data,
       questions: data.questions.map((que: { value: string }) => que.value),
     };
-    console.log(postData);
+    // console.log(postData);
   };
 
   const handledFieldAppend = () => {
