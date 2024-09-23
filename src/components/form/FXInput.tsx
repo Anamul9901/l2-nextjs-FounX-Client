@@ -1,15 +1,9 @@
-"use client"
+"use client";
+import { IInput } from "@/src/types";
 import { Input } from "@nextui-org/input";
 import { useFormContext } from "react-hook-form";
 
-interface IProps {
-  variant?: "flat" | "bordered" | "faded" | "underlined";
-  size?: "sm" | "md" | "lg";
-  required?: boolean;
-  type?: string;
-  label: string;
-  name: string;
-}
+interface IProps extends IInput {}
 
 const FXInput = ({
   variant = "bordered",

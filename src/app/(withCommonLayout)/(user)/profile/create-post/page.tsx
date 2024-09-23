@@ -1,4 +1,5 @@
 "use client";
+import FXDatePicker from "@/src/components/form/FXDatePicker";
 import FXInput from "@/src/components/form/FXInput";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
@@ -21,7 +22,7 @@ const CratePost = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    // console.log(data);
+    console.log(data);
     const postData = {
       ...data,
       questions: data.questions.map((que: { value: string }) => que.value),
@@ -44,7 +45,7 @@ const CratePost = () => {
                 <FXInput label="Title" name="title" />
               </div>
               <div className="min-w-fit flex-1">
-                <FXInput label="Title" name="title" />
+                <FXDatePicker label="Found date" name="dateFound" />
               </div>
             </div>
             <div className="flex flex-wrap gap-2 py-2">
