@@ -3,6 +3,7 @@ import { AddIcon, TrashIcom } from "@/src/assets/icons";
 import FXDatePicker from "@/src/components/form/FXDatePicker";
 import FXInput from "@/src/components/form/FXInput";
 import FXSelect from "@/src/components/form/FXSelect";
+import Loading from "@/src/components/UI/loading";
 import { useUser } from "@/src/context/user.provider";
 import { ueGetCategories } from "@/src/hooks/categoreis.hook";
 import { useCreatePost } from "@/src/hooks/post.hook";
@@ -10,6 +11,7 @@ import dateToISO from "@/src/utils/dateToISO";
 import { allDistict } from "@bangladeshi/bangladesh-address";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   FieldValues,
@@ -30,7 +32,13 @@ const CratePost = () => {
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
   // console.log(imagePreviews);
 
-  const { mutate: handleCreatePOst } = useCreatePost();
+  const router = useRouter();
+
+  const {
+    mutate: handleCreatePOst,
+    isPending: createPostPending,
+    isSuccess,
+  } = useCreatePost();
 
   const { user } = useUser();
 
@@ -106,8 +114,13 @@ const CratePost = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  if (!createPostPending && isSuccess) {
+    router.push("/");
+  }
   return (
     <>
+      {createPostPending && <Loading />}
       <div className="h-full rounded-xl bg-gradient-to-b from-default-100 px-[73px] py-12">
         <h1 className="text-2xl font-semibold">Post a found item</h1>
         <Divider className="mb-5 mt-3" />

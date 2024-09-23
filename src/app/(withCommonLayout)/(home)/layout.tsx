@@ -5,7 +5,7 @@ const layout = ({
   recentPosts,
 }: {
   children: ReactNode;
-  RecentPosts: ReactNode;
+  recentPosts: ReactNode;
 }) => {
   return (
     <div>
