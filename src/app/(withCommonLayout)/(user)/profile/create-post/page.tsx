@@ -5,6 +5,7 @@ import FXInput from "@/src/components/form/FXInput";
 import FXSelect from "@/src/components/form/FXSelect";
 import { useUser } from "@/src/context/user.provider";
 import { ueGetCategories } from "@/src/hooks/categoreis.hook";
+import { useCreatePost } from "@/src/hooks/post.hook";
 import dateToISO from "@/src/utils/dateToISO";
 import { allDistict } from "@bangladeshi/bangladesh-address";
 import { Button } from "@nextui-org/button";
@@ -29,6 +30,8 @@ const CratePost = () => {
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
   // console.log(imagePreviews);
 
+  const { mutate: handleCreatePOst } = useCreatePost();
+
   const { user } = useUser();
 
   const {
@@ -36,7 +39,7 @@ const CratePost = () => {
     isLoading: categoryLoading,
     isSuccess: categorySuccss,
   } = ueGetCategories();
-  // console.log(categoriesDate);
+  console.log(categoriesDate);
 
   let catagoryOption: { key: string; label: string }[] = [];
   if (categoriesDate?.data && !categoryLoading) {
@@ -76,8 +79,10 @@ const CratePost = () => {
       formData.append("itemImages", image);
     }
 
-    console.log(formData.get("data"));
-    console.log(formData.get("itemImages"));
+    // console.log(formData.get("data"));
+    // console.log(formData.get("itemImages"));
+
+    handleCreatePOst(formData);
   };
 
   const handleFieldAppend = () => {
