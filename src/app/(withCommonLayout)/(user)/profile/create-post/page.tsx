@@ -2,6 +2,7 @@
 import FXDatePicker from "@/src/components/form/FXDatePicker";
 import FXInput from "@/src/components/form/FXInput";
 import FXSelect from "@/src/components/form/FXSelect";
+import { ueGetCategories } from "@/src/hooks/categoreis.hook";
 import dateToISO from "@/src/utils/dateToISO";
 import { allDistict } from "@bangladeshi/bangladesh-address";
 import { Button } from "@nextui-org/button";
@@ -21,6 +22,20 @@ const cityOptions = allDistict()
   });
 
 const CratePost = () => {
+  const { data: categoriesDate, isLoading: categoryLoading } =
+    ueGetCategories();
+  // console.log(categoriesDate);
+
+  let catagoryOption: { key: string; label: string }[] = [];
+  if (categoriesDate?.data && !categoryLoading) {
+    catagoryOption = categoriesDate.data
+      .sort()
+      .map((category: { _id: string; name: string }) => ({
+        key: category._id,
+        label: category.name,
+      }));
+  }
+
   const methods = useForm();
   const { control, handleSubmit } = methods;
 
@@ -69,7 +84,11 @@ const CratePost = () => {
             </div>
             <div className="flex flex-wrap gap-2 py-2">
               <div className="min-w-fit flex-1">
-                <FXInput label="Title" name="title" />
+                <FXSelect
+                  label="Category"
+                  name="category"
+                  options={catagoryOption}
+                />
               </div>
               <div className="min-w-fit flex-1">
                 {/* <label
