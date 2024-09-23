@@ -1,6 +1,7 @@
 "use client";
 import FXDatePicker from "@/src/components/form/FXDatePicker";
 import FXInput from "@/src/components/form/FXInput";
+import dateToISO from "@/src/utils/dateToISO";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
 import {
@@ -22,12 +23,14 @@ const CratePost = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    // console.log(data);
     const postData = {
       ...data,
       questions: data.questions.map((que: { value: string }) => que.value),
+      // test: new Date("08-20-2000").toISOString(),
+      dateFound: dateToISO(data.dateFound),
     };
-    // console.log(postData);
+    console.log(postData);
   };
 
   const handleFieldAppend = () => {
