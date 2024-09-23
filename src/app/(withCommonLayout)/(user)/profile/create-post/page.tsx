@@ -1,7 +1,9 @@
 "use client";
+import { AddIcon, TrashIcom } from "@/src/assets/icons";
 import FXDatePicker from "@/src/components/form/FXDatePicker";
 import FXInput from "@/src/components/form/FXInput";
 import FXSelect from "@/src/components/form/FXSelect";
+import { useUser } from "@/src/context/user.provider";
 import { ueGetCategories } from "@/src/hooks/categoreis.hook";
 import dateToISO from "@/src/utils/dateToISO";
 import { allDistict } from "@bangladeshi/bangladesh-address";
@@ -26,6 +28,8 @@ const CratePost = () => {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
   // console.log(imagePreviews);
+
+  const { user } = useUser();
 
   const {
     data: categoriesDate,
@@ -54,21 +58,33 @@ const CratePost = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    // console.log(data);
+    console.log(data);
+
+    const formData = new FormData();
     const postData = {
       ...data,
       questions: data.questions.map((que: { value: string }) => que.value),
       // test: new Date("08-20-2000").toISOString(),
       dateFound: dateToISO(data.dateFound),
+      user: user!._id,
     };
-    console.log(postData);
+    // console.log(postData);
+
+    formData.append("data", JSON.stringify(postData));
+
+    for (let image of imageFiles) {
+      formData.append("itemImages", image);
+    }
+
+    console.log(formData.get("data"));
+    console.log(formData.get("itemImages"));
   };
 
   const handleFieldAppend = () => {
     append({ name: "questions" });
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: any) => {
     // console.log(e.target.files[0]);
 
     const file = e.target.files[0];
@@ -119,16 +135,16 @@ const CratePost = () => {
               </div>
               <div className="min-w-fit flex-1">
                 <label
-                  className="bg-gray-500 block w-full h-full rounded-md"
+                  className="flex h-14 w-full cursor-pointer items-center justify-center rounded-xl border-2 border-default-200 text-default-500 shadow-sm transition-all duration-100 hover:border-default-400"
                   htmlFor="image"
                 >
                   Upload image
                 </label>
                 <input
-                  hidden
                   multiple
-                  type="file"
+                  className="hidden"
                   id="image"
+                  type="file"
                   onChange={(e) => handleImageChange(e)}
                 />
               </div>
@@ -155,7 +171,7 @@ const CratePost = () => {
 
             <div className="flex flex-wrap-reverse gap-2 py-2">
               <div className="min-w-fit flex-1">
-                <FXInput label="Title" name="title" />
+                <FXInput label="Description" name="description" />
               </div>
             </div>
 
@@ -164,7 +180,7 @@ const CratePost = () => {
             <div className="flex justify-between items-center mb-5">
               <h1 className="text-xl">Owner verification questions</h1>
               <Button isIconOnly onClick={() => handleFieldAppend()}>
-                add
+                <AddIcon />
               </Button>
             </div>
 
@@ -177,7 +193,7 @@ const CratePost = () => {
                     className="h-14 w-16"
                     onClick={() => remove(index)}
                   >
-                    del
+                    <TrashIcom />
                   </Button>
                 </div>
               ))}
