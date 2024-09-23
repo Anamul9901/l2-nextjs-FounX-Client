@@ -7,6 +7,7 @@ import dateToISO from "@/src/utils/dateToISO";
 import { allDistict } from "@bangladeshi/bangladesh-address";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
+import { useState } from "react";
 import {
   FieldValues,
   FormProvider,
@@ -22,8 +23,14 @@ const cityOptions = allDistict()
   });
 
 const CratePost = () => {
-  const { data: categoriesDate, isLoading: categoryLoading } =
-    ueGetCategories();
+  const [imageFiles, setImageFiles] = useState<File[] | []>([]);
+  console.log(imageFiles);
+
+  const {
+    data: categoriesDate,
+    isLoading: categoryLoading,
+    isSuccess: categorySuccss,
+  } = ueGetCategories();
   // console.log(categoriesDate);
 
   let catagoryOption: { key: string; label: string }[] = [];
@@ -59,6 +66,13 @@ const CratePost = () => {
   const handleFieldAppend = () => {
     append({ name: "questions" });
   };
+
+  const handleImageChange = (e) => {
+    // console.log(e.target.files[0]);
+
+    const file = e.target.files[0];
+    setImageFiles((prev) => [...prev, file]);
+  };
   return (
     <>
       <div className="h-full rounded-xl bg-gradient-to-b from-default-100 px-[73px] py-12">
@@ -88,16 +102,23 @@ const CratePost = () => {
                   label="Category"
                   name="category"
                   options={catagoryOption}
+                  isDisabled={!categorySuccss}
                 />
               </div>
               <div className="min-w-fit flex-1">
-                {/* <label
-                  className="flex h-14 w-full cursor-pointer items-center justify-center rounded-xl border-2 border-default-200 text-default-500 shadow-sm transition-all duration-100 hover:border-default-400"
+                <label
+                  className="bg-gray-500 block w-full h-full rounded-md"
                   htmlFor="image"
                 >
                   Upload image
-                </label> */}
-                <FXInput label="Title" name="title" />
+                </label>
+                <input
+                  hidden
+                  multiple
+                  type="file"
+                  id="image"
+                  onChange={(e) => handleImageChange(e)}
+                />
               </div>
             </div>
 

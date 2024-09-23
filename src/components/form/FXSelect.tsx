@@ -9,7 +9,13 @@ interface IProps extends IInput {
   }[];
 }
 
-const FXSelect = ({ options, name, label, variant = "bordered" }: IProps) => {
+const FXSelect = ({
+  options,
+  name,
+  label,
+  variant = "bordered",
+  isDisabled,
+}: IProps) => {
   const {
     register,
     formState: { errors },
@@ -21,6 +27,7 @@ const FXSelect = ({ options, name, label, variant = "bordered" }: IProps) => {
       label={label}
       className="max-w-[284px] min-w-full"
       variant={variant}
+      isDisabled={isDisabled}
     >
       {options.map((option) => (
         <SelectItem key={option.key}>{option.label}</SelectItem>
