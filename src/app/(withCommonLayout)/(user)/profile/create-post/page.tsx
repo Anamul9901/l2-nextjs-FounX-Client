@@ -29,35 +29,87 @@ const CratePost = () => {
     // console.log(postData);
   };
 
-  const handledFieldAppend = () => {
+  const handleFieldAppend = () => {
     append({ name: "questions" });
   };
   return (
-    <div>
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FXInput name="title" label="Title" />
-
-          <Divider className="my-5" />
-
-          <div className="flex justify-between items-center">
-            <h1 className="text-xl">Owner verification question</h1>
-            <Button onClick={() => handledFieldAppend()}>Append</Button>
-          </div>
-
-          {fields.map((field, index) => (
-            <div key={field.id} className="flex items-center">
-              <FXInput name={`questions.${index}.value`} label="Questions" />
-              <Button onClick={() => remove(index)}>Remove</Button>
+    <>
+      <div className="h-full rounded-xl bg-gradient-to-b from-default-100 px-[73px] py-12">
+        <h1 className="text-2xl font-semibold">Post a found item</h1>
+        <Divider className="mb-5 mt-3" />
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-wrap gap-2 py-2">
+              <div className="min-w-fit flex-1">
+                <FXInput label="Title" name="title" />
+              </div>
+              <div className="min-w-fit flex-1">
+                <FXInput label="Title" name="title" />
+              </div>
             </div>
-          ))}
+            <div className="flex flex-wrap gap-2 py-2">
+              <div className="min-w-fit flex-1">
+                <FXInput label="Location" name="location" />
+              </div>
+              <div className="min-w-fit flex-1">
+                <FXInput label="Title" name="title" />
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2 py-2">
+              <div className="min-w-fit flex-1">
+                <FXInput label="Title" name="title" />
+              </div>
+              <div className="min-w-fit flex-1">
+                {/* <label
+                  className="flex h-14 w-full cursor-pointer items-center justify-center rounded-xl border-2 border-default-200 text-default-500 shadow-sm transition-all duration-100 hover:border-default-400"
+                  htmlFor="image"
+                >
+                  Upload image
+                </label> */}
+                <FXInput label="Title" name="title" />
+              </div>
+            </div>
 
-          <Divider className="my-5" />
+            <div className="flex flex-wrap-reverse gap-2 py-2">
+              <div className="min-w-fit flex-1">
+                <FXInput label="Title" name="title" />
+              </div>
+            </div>
 
-          <Button type="submit">Post</Button>
-        </form>
-      </FormProvider>
-    </div>
+            <Divider className="my-5" />
+
+            <div className="flex justify-between items-center mb-5">
+              <h1 className="text-xl">Owner verification questions</h1>
+              <Button isIconOnly onClick={() => handleFieldAppend()}>
+                add
+              </Button>
+            </div>
+
+            <div className="space-y-5">
+              {fields.map((field, index) => (
+                <div key={field.id} className="flex gap-2 items-center">
+                  <FXInput label="Question" name={`questions.${index}.value`} />
+                  <Button
+                    isIconOnly
+                    className="h-14 w-16"
+                    onClick={() => remove(index)}
+                  >
+                    del
+                  </Button>
+                </div>
+              ))}
+            </div>
+
+            <Divider className="my-5" />
+            <div className="flex justify-end">
+              <Button size="lg" type="submit">
+                Post
+              </Button>
+            </div>
+          </form>
+        </FormProvider>
+      </div>
+    </>
   );
 };
 
