@@ -24,7 +24,8 @@ const cityOptions = allDistict()
 
 const CratePost = () => {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
-  console.log(imageFiles);
+  const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
+  // console.log(imagePreviews);
 
   const {
     data: categoriesDate,
@@ -72,6 +73,17 @@ const CratePost = () => {
 
     const file = e.target.files[0];
     setImageFiles((prev) => [...prev, file]);
+
+    //* local img file to local img url
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setImagePreviews((prev) => [...prev, reader.result as string]);
+      };
+
+      reader.readAsDataURL(file);
+    }
   };
   return (
     <>
@@ -120,6 +132,25 @@ const CratePost = () => {
                   onChange={(e) => handleImageChange(e)}
                 />
               </div>
+            </div>
+
+            <div className="flex">
+              {imagePreviews.length > 0 && (
+                <div className="flex gap-5 my-5 flex-wrap">
+                  {imagePreviews.map((imageDataUrl) => (
+                    <div
+                      key={imageDataUrl}
+                      className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2"
+                    >
+                      <img
+                        alt="item"
+                        className="h-full w-full object-cover object-center rounded-md"
+                        src={imageDataUrl}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="flex flex-wrap-reverse gap-2 py-2">
