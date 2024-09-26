@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import { IPost, IUser } from "@/src/types";
 import ImageGallery from "./ImageGallery";
+import ClaimRequestModal from "../../modals/ClaimRequestModal";
 
 const Post = ({ post }: { post: IPost }) => {
   const {
@@ -50,9 +51,7 @@ const Post = ({ post }: { post: IPost }) => {
         </div>
         <ImageGallery images={images} />
         <div className="mt-4 flex gap-5">
-          <Button variant="light" className="flex-1">
-            Share
-          </Button>
+          <ClaimRequestModal />
           <Button variant="light" className="flex-1">
             Share
           </Button>
