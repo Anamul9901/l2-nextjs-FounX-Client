@@ -51,7 +51,7 @@ const Post = ({ post }: { post: IPost }) => {
         </div>
         <ImageGallery images={images} />
         <div className="mt-4 flex gap-5">
-          <ClaimRequestModal />
+          <ClaimRequestModal id={_id} questions={questions} />
           <Button variant="light" className="flex-1">
             Share
           </Button>
