@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import LightGallery from "lightgallery/react";
 
 // import styles
@@ -17,10 +17,28 @@ interface IProps {
 
 const ImageGallery = ({ images }: IProps) => {
   return (
-    <LightGallery speed={500} plugins={[lgThumbnail, lgZoom]}>
+    <LightGallery
+      elementClassNames={`mt-2 gap-2 grid place-item-center grid-cols-2 ${
+        images.length === 1 ? "grid-cols-1" : "grid-cols-2"
+      }`}
+      speed={500}
+      plugins={[lgThumbnail, lgZoom]}
+    >
       {images?.map((image, index) => (
-        <Link href={image}>
-          <Image src={image} alt={`image-${index}`} width={500} height={500} />
+        <Link
+          className={`w-full ${
+            images.length === 3 && index === 0 ? "col-span-2" : "col-span-1"
+          }`}
+          key={index}
+          href={image}
+        >
+          <Image
+            className="h-[400px] w-full object-cover"
+            src={image}
+            alt={`image-${index}`}
+            width={500}
+            height={500}
+          />
         </Link>
       ))}
     </LightGallery>
