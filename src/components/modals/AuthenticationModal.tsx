@@ -1,0 +1,25 @@
+import Link from "next/link";
+import FXModal from "./FXModal";
+import { Button } from "@nextui-org/button";
+import { IPost } from "@/src/types";
+
+interface Iprops {
+  id: string;
+}
+const AuthenticationModal = ({ id }: Iprops) => {
+  return (
+    <FXModal title="Authentication" buttonText="Claim Item" buttonClassName="flex-1">
+      <div>You are not currently logged in. Plese login first to continue.</div>
+      <div className="mb-4 mt-2 flex gap-2">
+        <Link className="flex-1" href={`/register?redirect=found-items/${id}`}>
+          <Button className="w-full">Register</Button>
+        </Link>
+        <Link className="flex-1" href={`/login?redirect=found-items/${id}`}>
+          <Button className="w-full">Login</Button>
+        </Link>
+      </div>
+    </FXModal>
+  );
+};
+
+export default AuthenticationModal;

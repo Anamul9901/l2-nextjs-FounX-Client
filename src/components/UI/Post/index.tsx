@@ -6,6 +6,8 @@ import { Button } from "@nextui-org/button";
 import { IPost, IUser } from "@/src/types";
 import ImageGallery from "./ImageGallery";
 import ClaimRequestModal from "../../modals/ClaimRequestModal";
+import { useUser } from "@/src/context/user.provider";
+import AuthenticationModal from "../../modals/AuthenticationModal";
 
 const Post = ({ post }: { post: IPost }) => {
   const {
@@ -21,6 +23,9 @@ const Post = ({ post }: { post: IPost }) => {
   } = post || {};
 
   const { name, email, profilePhoto } = (user as IUser) || {};
+
+  const { user: loggedInUser } = useUser();
+
   return (
     <div className="mb-2 rounded-md bg-default-100 p-4">
       <div className="border-b border-default-200 pb-2">
@@ -51,7 +56,15 @@ const Post = ({ post }: { post: IPost }) => {
         </div>
         <ImageGallery images={images} />
         <div className="mt-4 flex gap-5">
-          <ClaimRequestModal id={_id} questions={questions} />
+          {email !== loggedInUser?.email && (
+            <>
+              {loggedInUser?.email && (
+                <ClaimRequestModal id={_id} questions={questions} />
+              )}
+              {!loggedInUser?.email && <AuthenticationModal id={_id} />}
+              <div className="w-[1px] bg-default-200" />
+            </>
+          )}
           <Button variant="light" className="flex-1">
             Share
           </Button>
